@@ -1,0 +1,43 @@
+{% set loads = hubdb_table_rows(TABLE_ID, "carrier_email_address="~contact.email, "origin_city,destination_city,earliest_pu,earliest_unload,latest_pu,distance,order_number,weight,trailer_instructions,haulynx_load_url,trailer_type,broker_phone,broker_name") %}
+
+<h1 style="text-align:center; background-color:#006450; color:white;">
+YOUR RECOMMENDED LANES
+</h1>
+ <p style="font-family:sans-serif;size:10px;color:#3b3b3b;"><br>
+  <center><strong>{{ personalization_token("contact.company", "") }}</strong><br><br>Based on your booking history and preferences, we have some new lanes available that we think you'll like.<br>
+    </center></p>{% for load in loads %}
+<div style="padding:10px; text-align:center;">
+  <h2>
+    {{load.origin_city}} - to - {{load.destination_city}} 
+  </h2>
+  <p style="font-family:sans-serif;size:10px;color:#3b3b3b;">
+
+      <br>Order #: {{load.order_number}}<br>
+      <br>Pickup: {{load.earliest_pu|datetimeformat('%B %e, %Y %l %p')}}
+      <br>Unload: {{load.earliest_unload|datetimeformat('%B %e, %Y %l %p')}}<br>
+      <br>Distance: {{load.distance}} miles
+        <br>Weight: {{load.weight}} lbs.
+    <br>Trailer Type: {{load.trailer_type}}  
+      <br>{{load.trailer_instructions}}
+
+  <br><br><p>
+  
+<a href="{{load.haulynx_load_url}}" style="color:#006450; font-weight:bold;">
+    BOOK NOW
+  </a></p><br>
+    <h4 style="text-align:center; color:black;"> 
+    
+    Or call your broker, {{load.broker_name}}, at <a href="tel:{{load.broker_phone}}"> {{load.broker_phone}}</a>, and mention this email.
+</h4>
+  <hr>
+
+{% endfor %}
+  
+</div>
+
+
+
+                    
+
+
+

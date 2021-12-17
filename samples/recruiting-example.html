@@ -1,0 +1,5 @@
+{% set jobs = hubdb_table_rows(TABLE_ID, "email_id="~contact.email_id~"&limit=10") %}
+{% for job in jobs %}
+    <h2><span style="color: #54585a;"><span style="font-weight: bold;">{{job.name}}</span><span style="font-weight: normal;"> | {{job.location}} | {{job.pay_range}}</span></span></h2>
+    <a href="{{job.position_link}}?utm_campaign={{contact.utm_campaign}}" target="_blank">DETAILS</a>
+{% endfor %}
