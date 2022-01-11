@@ -1,0 +1,13 @@
+{% set tableFilter = "category=contact.perferred_category&availability=contact.preferred_availability" %}
+ 
+Welcome {{ contact.firstname }}!
+We found some brand new holiday destinations that we think are a perfect fit for you.
+
+{% for destination in hubdb_table_rows(DESTINATIONS_ITENARY_TABLE_ID, tableFilter) %}
+    Why not check out {{ destination.name }}? {{ destination.name }} is available for {{ destination.availability }}.
+ 
+    {{ destination.description }}
+    <img src="{{ destination.image.url }}" style="max-width:450px">
+ 
+    <a href="{{ desintation.booking_link }}">Reserve your place, now.</a>
+{% endfor %}

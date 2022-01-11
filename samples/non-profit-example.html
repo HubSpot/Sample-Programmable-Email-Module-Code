@@ -1,0 +1,38 @@
+{% set brand_query = "brand="~contact.state_brand %}
+{% set brand = hubdb_table_row(BRAND_TABLE_ID, brand_query) %}
+
+
+{# Mail is sent on pre-determined days, pulling content from HubDB for current day #}
+{% set mail_query = "maildate="~unixtimestamp(today()) %}
+
+{% set mailcontents = hubdb_table_row(MAILS_TABLE_ID, mail_query)  %}
+
+
+<h2>
+    {{ mailcontents.header_attention_text }}
+</h2>
+
+<p></p>
+
+{# Display a table showing the available course for this brand and the content for this mailing #}
+
+<table width="100%" align="center" cellspacing="0" cellpadding="8">
+    <tr>
+        <td align="center"><strong>{{ mailcontents.header_attention_text }}</strong>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+        <a href="{{ brand.course_url }}" name="title">{{ brand.title }}</a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="middle">WAS
+        <strike>${{ brand.cost }}</strike><br><a href="{{ brand.course_url }}" name="saleprice">LIMITED TIME ONLY ${{ brand.saleprice }}</a>            
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+        Use promo code <strong>{{ brand.promo_code }}</strong> to <strong>take ${{ (brand.cost - brand.saleprice)|round(0, 'floor') }} off!</strong></td>
+    </tr>      
+</table>

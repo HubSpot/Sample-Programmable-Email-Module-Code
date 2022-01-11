@@ -1,0 +1,17 @@
+{# Based on more detailed example here https://developers.hubspot.com/docs/cms/guides/email/hubdb-crm-objects #}
+
+{% set query = "price__lte="~contact.budget_max~"price__gte="~contact.budget_min~"&city="~contact.city~"&order=listing_name" %}
+{% set real_estate_listings = hubdb_table_rows(PROPERTY_HUBDB_TABLE_ID, query) %}
+
+{% for home in real_estate_listings %}
+{{ home.address}} <br>
+{{ home.price }} <br>
+<img
+alt="{{ home.name }}"
+src="{{ home.hero_image.url }}"
+style="outline: none; max-width: 100%;"
+width="260px"
+/>
+<br>
+<hr>
+{% endfor %}
